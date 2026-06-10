@@ -1,0 +1,32 @@
+netflix_queries.sql
+
+mysql> create database netflix_project;
+mysql> use netflix_project;
+mysql> create table netflix(show_id varchar(10),type varchar(10),title varchar(150),director varchar(250),cast varchar(1000), country varchar(150), date_added varchar(50),release_year int,rating varchar(10),duration varchar(20),listed_in varchar(100),description varchar(500));
+mysql> load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 9.5\\Uploads\\netflix_titles.csv'
+    -> into table netflix
+    -> fields terminated by ','
+    -> enclosed by '"'
+    -> lines terminated by '\n'
+    -> ignore 1 rows;
+mysql> select type,count(*) as total
+    -> from netflix
+    -> group by type;
+mysql> select country,count(*) as total
+    -> from netflix
+    -> where country !=''
+    -> group by country
+    -> order by total desc
+    -> limit 10;
+mysql> select release_year, count(*) as total
+    -> from netflix
+    -> group by release_year
+    -> order by release_year desc
+    -> limit 10;
+mysql> select rating, count(*) as total
+    -> from netflix
+    -> group by rating
+    -> order by total desc;
+mysql> select type, avg(release_year) as avg_year
+    -> from netflix
+    -> group by type;
